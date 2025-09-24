@@ -9,7 +9,7 @@ import argparse
 
 class WatermarkConfig:
     def __init__(self):
-        self.font_size = 36
+        self.font_size = 236
         self.font_color = (255, 255, 255)  # 白色
         self.position = "bottom-right"  # 默认位置
         self.margin = 20  # 边距
@@ -146,7 +146,7 @@ class ImageWatermarkTool:
             return
         
         # 创建输出目录
-        output_dir = directory / f"_watermarkNew"
+        output_dir = directory / f"_watermarkdImg"
         output_dir.mkdir(exist_ok=True)
         
         # 支持的图片格式
@@ -265,7 +265,7 @@ def main():
     if args.path:
         directory_path = args.path
     else:
-        directory_path = r"E:\code\LLM-for-SE\hw1\_watermark"
+        directory_path = r"E:\code\LLM-for-SE\_watermark"
     
     if not directory_path:
         print("未提供目录路径")
