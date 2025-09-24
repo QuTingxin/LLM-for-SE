@@ -23,10 +23,14 @@ class ImageWatermarkTool:
         """从图片EXIF信息中提取拍摄日期"""
         try:
             with Image.open(image_path) as img:
+                # print("  - 打开图片...", img)
                 exif = img._getexif()
+                # print("  - 读取EXIF信22222息...")
+                # print(exif)
                 if exif is not None:
                     for tag, value in exif.items():
                         tag_name = ExifTags.TAGS.get(tag, tag)
+                        # print(f"    - {tag_name}: {value}")
                         # 查找拍摄时间相关的标签
                         if tag_name in ['DateTime', 'DateTimeOriginal', 'DateTimeDigitized']:
                             if value:
@@ -59,6 +63,7 @@ class ImageWatermarkTool:
             font = None
             for font_path in font_paths:
                 if os.path.exists(font_path):
+                    print(f"  - 使用字体: {font_path}")
                     font = ImageFont.truetype(font_path, self.config.font_size)
                     break
             
@@ -110,10 +115,13 @@ class ImageWatermarkTool:
             with Image.open(image_path) as img:
                 # 转换为RGBA模式以支持透明度
                 if img.mode != 'RGBA':
+                    print("  - 转换为RGBA模式...")
                     img = img.convert('RGBA')
                 
                 # 创建水印
                 watermark = self.create_watermark_image(date_text, img.size)
+                # watermark.save("debug_watermark.png")
+
                 
                 # 合并图片和水印
                 result = Image.alpha_composite(img, watermark)
@@ -138,7 +146,7 @@ class ImageWatermarkTool:
             return
         
         # 创建输出目录
-        output_dir = directory / f"{directory.name}_watermark"
+        output_dir = directory / f"_watermarkNew"
         output_dir.mkdir(exist_ok=True)
         
         # 支持的图片格式
@@ -169,6 +177,7 @@ class ImageWatermarkTool:
             
             # 生成输出文件名
             output_file = output_dir / f"{image_file.stem}_watermarked.jpg"
+            print(f"  - 拍摄日期: {date_text}")
             
             # 添加水印
             if self.add_watermark_to_image(image_file, output_file, date_text):
@@ -234,10 +243,14 @@ def interactive_setup():
     return config
 
 def main():
+    # print("欢迎使用图片水印添加工具")
+
     parser = argparse.ArgumentParser(description='图片水印添加工具')
     parser.add_argument('path', nargs='?', help='图片目录路径')
     parser.add_argument('--interactive', '-i', action='store_true', 
                        help='交互式设置参数')
+
+    # print("欢迎使用图片水印添加工具")
     
     args = parser.parse_args()
     
@@ -246,12 +259,13 @@ def main():
     # 交互式设置
     if args.interactive:
         tool.config = interactive_setup()
+        
     
     # 获取目录路径
     if args.path:
         directory_path = args.path
     else:
-        directory_path = input("E:\\code\\LLM-for-SE\\hw1\\_watermark").strip()
+        directory_path = r"E:\code\LLM-for-SE\hw1\_watermark"
     
     if not directory_path:
         print("未提供目录路径")
