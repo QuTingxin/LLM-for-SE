@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact name="photo-watermark:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/photo_watermark_jar</output-path>
+    <root id="root">
+      <element id="archive" name="photo-watermark.jar">
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/_watermark2/out/META-INF/MANIFEST.MF" />
+        </element>
+        <element id="module-output" name="photo-watermark" />
+      </element>
+    </root>
+  </artifact>
+</component>

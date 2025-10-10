@@ -28,6 +28,18 @@
             <!-- Maven Shade Plugin to create fat JAR -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.2</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.yourcompany.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.2.4</version>
                 <executions>
@@ -43,6 +55,25 @@
                                 </transformer>
                             </transformers>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.panteleyev</groupId>
+                <artifactId>jpackage-maven-plugin</artifactId>
+                <version>1.4.0</version>
+                <configuration>
+                    <name>MyApplication</name>
+                    <vendor>YourCompany</vendor>
+                    <mainClass>com.yourcompany.Main</mainClass>
+                    <mainJar>myapp-1.0.0.jar</mainJar>
+                    <icon>src/main/resources/icon.ico</icon>
+                    <type>EXE</type>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals><goal>jpackage</goal></goals>
                     </execution>
                 </executions>
             </plugin>
